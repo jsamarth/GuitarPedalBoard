@@ -1,4 +1,5 @@
-module Final_Project(input  logic Clk, Reset,
+module Final_Project(input  logic Clk, 
+							input logic [3:0] Key,
 							input  logic AUD_BCLK, AUD_ADCDAT, AUD_DACLRCK, AUD_ADCLRCK,
 							input  logic [17:0] Switch,
 							output logic AUD_MCLK, AUD_DACDAT, I2C_SDAT, I2C_SCLK);
@@ -6,6 +7,14 @@ module Final_Project(input  logic Clk, Reset,
 logic init, init_f, start, adc_full;
 logic [15:0] board_out;
 logic [31:0] board_in;
+
+assign Reset = Key[0];
+
+Register volume(	.Clk(Clk), 
+						.Reset(Reset),
+						.Vol_up(Key[3]),
+						.Vol_down(Key[2]),
+						.Data(Vol_level));
 
 Pedal_Board board_inst( .Signal_in(board_in[15:0]),
 								.Clk(Clk),
@@ -29,7 +38,8 @@ audio_interface audio_interface_instance (
       .AUD_ADCLRCK(AUD_ADCLRCK), //
 		.I2C_SDAT(I2C_SDAT), 
 		.I2C_SCLK(I2C_SCLK),
-		.ADCDATA(board_in) );	
+		.ADCDATA(board_in),
+		.Volume(Vol_level));	
 		
 enum logic[1:0]{	Halt,
 						Init,

@@ -33,7 +33,8 @@ ENTITY audio_interface IS
 		AUD_DACLRCK, AUD_ADCLRCK :          IN std_logic; -- DAC data left/right select
 		I2C_SDAT :             OUT std_logic; -- serial interface data line
 		I2C_SCLK :             OUT std_logic;  -- serial interface clock
-		ADCDATA : 				OUT std_logic_vector(31 downto 0)
+		ADCDATA : 				OUT std_logic_vector(31 downto 0);
+		Volume : 				IN std_logic_vector(7 downto 0)
 	);
 END audio_interface;
 
@@ -81,7 +82,7 @@ constant SCI_REG_ROM : rom_type := (
 constant SCI_DAT_ROM : rom_type := (
 	"00000000", -- Deactivate - R9
 	"00011111", -- ADC L/R Volume - R0 Old: "00011111"
-	"11111111", -- Headphone volume - R2 Old: "11111001" "11110001"
+	Volume    , -- Headphone volume - R2 Old: "11111001" "11110001"
 	"11010000", -- Select DAC - R4
 	"00000101", -- Turn off de-emphasis,  Off with HPF, unmute; DAC Old: "00010110" - R5
 	"01100000", -- Device power on, ADC/DAC power on - R6
