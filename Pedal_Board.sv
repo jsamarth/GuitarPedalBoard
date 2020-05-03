@@ -2,13 +2,21 @@ module Pedal_Board(input logic [15:0] Signal_in,
 							input logic Clk,
 							input logic [17:0] Switches,
 							output logic [15:0] Signal_out);
+							
+logic od_start
 
 //clean clean_pedal(.in(Signal_in),
 //						.out(clean_out));
 //
-//distortion dist_pedal(	.in(Signal_in),
-//								.out(dist_out));
-//
+overdrive_effect OD_pedal(	.input_frame(Signal_in),
+									.CLK(Clk),
+									.START(od_start),
+									.Done(OD_done),
+									.gain(Switches[0]),
+									.output_frame(dist_out));
+									
+// Hellooooooo
+
 //mux4_1 distmux(.d0(Signal_in),
 //					.d1(clean_out)
 //					.d2(dist_out),
@@ -44,5 +52,14 @@ always_comb
 	begin				
 	//Signal_out = revbmux_out;
 	Signal_out = Signal_in;
+	end
+always_ff @(posedge Clk)
+	begin
+		if(OD_done)
+			od_start <= 0;
+		else
+			od_start <= 1;
+
+
 	end
 endmodule
