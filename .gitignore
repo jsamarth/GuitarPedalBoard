@@ -1,1 +1,6 @@
 *.bak
+db/
+incremental_db/
+*.qpf
+output_files/
+simulation/
