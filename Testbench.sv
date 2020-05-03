@@ -12,7 +12,7 @@ end
 
 logic START;
 logic DONE;
-logic gain;
+logic signed gain;
 logic signed [15:0] input_frame;
 logic signed [15:0] output_frame;
 
@@ -30,6 +30,30 @@ initial begin: TEST_VECTORS
 	input_frame = 16'h3333;
 	
 	#2
+	START = 0;
+
+	#2
+	gain = 1'b1;
+	START = 1'b1;
+	input_frame = 16'b1111111111001110;
+	
+	#3
+	START = 0;
+	
+	#2
+	gain = 1'b1;
+	START = 1'b1;
+	input_frame = 16'b1000101011010000;
+	
+	#3
+	START = 0;
+	
+	#2
+	gain = 1'b1;
+	START = 1'b1;
+	input_frame = 16'b0111010100110000;
+	
+	#3
 	START = 0;
 	
 end
