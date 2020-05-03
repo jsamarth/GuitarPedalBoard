@@ -6,6 +6,8 @@ module Register(input  logic Clk, Reset, Vol_up, Vol_down,
     always_ff @ (posedge Clk)
     begin 
 			State <= Next_state;
+			
+			// hey
     end
 	
 	always_comb
