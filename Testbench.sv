@@ -10,13 +10,11 @@ always begin : CLOCK_GENERATION
 #1 CLK = ~CLK;
 end
 
-logic START;
-logic DONE;
-logic signed gain;
-logic signed [15:0] input_frame;
-logic signed [15:0] output_frame;
+logic [15:0] Signal_in;
+logic [17:0] Switches;
+logic [15:0] Signal_out;
 
-overdrive_effect od_effect(.*);
+Pedal_Board PB(.Clk(CLK), .*);
 
 initial begin: CLOCK_INITIALIZATION
     CLK = 0;
@@ -25,36 +23,22 @@ end
 initial begin: TEST_VECTORS
 
 	#1
-	gain = 1'b0;
-	START = 1'b1;
-	input_frame = 16'h3333;
+	Signal_in = 16'h4af3;
+	Switches = 18'h00000;
 	
-	#2
-	START = 0;
-
-	#2
-	gain = 1'b1;
-	START = 1'b1;
-	input_frame = 16'b1111111111001110;
+	#5
+	Signal_in = 16'h4af3;
+	Switches = 18'h20000;
 	
-	#3
-	START = 0;
+	#5
+	Signal_in = 16'h0005;
 	
-	#2
-	gain = 1'b1;
-	START = 1'b1;
-	input_frame = 16'b1000101011010000;
+	#5
+	Signal_in = 16'hfa8d;
 	
-	#3
-	START = 0;
-	
-	#2
-	gain = 1'b1;
-	START = 1'b1;
-	input_frame = 16'b0111010100110000;
-	
-	#3
-	START = 0;
+	#5
+	Switches = 18'h00000;
+		
 	
 end
 endmodule
