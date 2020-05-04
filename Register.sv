@@ -1,8 +1,15 @@
 module Register(input  logic Clk, Reset, Vol_up, Vol_down,
               output logic [7:0]  Data,
 				  output logic [3:0] hex_vol);
-				  
+			
+	logic RST, VU, VD;
+			
 	enum logic [3:0] {reset, Norm, up1, up2, down1, down2} State, Next_state;
+	
+assign RST = ~Reset;
+assign VU = ~Vol_up;
+assign VD = ~Vol_down;
+	
 	
     always_ff @ (posedge Clk)
     begin 
@@ -17,17 +24,17 @@ module Register(input  logic Clk, Reset, Vol_up, Vol_down,
 		reset:
 			begin
 				Next_state = Norm;
-				if (Reset)
+				if (RST)
 					Next_state = reset;
 			end
 		Norm:
 			begin
 				Next_state = Norm;
-				if (Vol_up)
+				if (VU)
 					Next_state = up1;
-				else if (Vol_down)
+				else if (VD)
 					Next_state = down1;
-				else if (~Reset)
+				else if (RST)
 					Next_state = reset;
 					
 			end
@@ -35,7 +42,7 @@ module Register(input  logic Clk, Reset, Vol_up, Vol_down,
 		up1:
 			begin
 			Next_state = up2;
-				if(Vol_up)
+				if(VU)
 					Next_state = up1;
 					
 			end
@@ -46,7 +53,7 @@ module Register(input  logic Clk, Reset, Vol_up, Vol_down,
 		down1:
 			begin
 				Next_state = down2;
-				if(Vol_down)
+				if(VD)
 					Next_state = down1;
 					
 			end		
@@ -66,9 +73,9 @@ always_ff@(posedge Clk)
 			reset:
 				Data <= 8'h00;
 			up2:
-				Data <= {Data[2:0], 1'b1};
+				Data <= {Data[6:0], 1'b1};
 			down2:
-				Data <= {1'b0, Data[3:1]};
+				Data <= {1'b0, Data[7:1]};
 			default:
 				Data <= Data;
 		endcase
