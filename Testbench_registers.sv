@@ -24,76 +24,76 @@ end
 initial begin: TEST_VECTORS
 
 	#1
+	Reset = 0;
+	
+	#3
 	Reset = 1;
-	
-	#3
-	Reset = 0;
-	Vol_up = 1;
-	Vol_down = 0;
-	
-	#3
-	Reset = 0;
-	Vol_up = 1;
-	Vol_down = 0;
-	
-	#3
-	Reset = 0;
-	Vol_up = 1;
-	Vol_down = 0;
-	
-	#3
-	Reset = 0;
-	Vol_up = 1;
-	Vol_down = 0;
-	
-	#3
-	Reset = 0;
-	Vol_up = 1;
-	Vol_down = 0;
-	
-	#3
-	Reset = 0;
-	Vol_up = 1;
-	Vol_down = 0;
-	
-	#3
-	Reset = 0;
-	Vol_up = 1;
-	Vol_down = 0;
-	
-	#3
-	Reset = 0;
-	Vol_up = 1;
-	Vol_down = 0;
-	
-	#3
-	Reset = 0;
-	Vol_up = 1;
-	Vol_down = 0;
-	
-	#3
-	Reset = 0;
-	Vol_up = 1;
-	Vol_down = 0;
-	
-	#3
-	Reset = 0;
-	Vol_up = 1;
-	Vol_down = 0;
-	
-	#3
-	Reset = 0;
 	Vol_up = 0;
 	Vol_down = 1;
 	
 	#3
-	Reset = 0;
+	Reset = 1;
+	Vol_up = 1;
+	Vol_down = 1;
+	
+	#3
+	Reset = 1;
 	Vol_up = 0;
 	Vol_down = 1;
 	
 	#3
-	Reset = 0;
+	Reset = 1;
 	Vol_up = 0;
+	Vol_down = 1;
+	
+	#3
+	Reset = 1;
+	Vol_up = 1;
+	Vol_down = 1;
+	
+	#3
+	Reset = 1;
+	Vol_up = 0;
+	Vol_down = 1;
+	
+	#3
+	Reset = 1;
+	Vol_up = 1;
+	Vol_down = 1;
+	
+	#3
+	Reset = 1;
+	Vol_up = 0;
+	Vol_down = 1;
+	
+	#3
+	Reset = 1;
+	Vol_up = 1;
+	Vol_down = 1;
+	
+	#3
+	Reset = 1;
+	Vol_up = 0;
+	Vol_down = 1;
+	
+	#3
+	Reset = 1;
+	Vol_up = 1;
+	Vol_down = 0;
+	
+	#3
+	Reset = 1;
+	Vol_up = 1;
+	Vol_down = 1;
+	
+	#3
+	Reset = 1;
+	Vol_up = 1;
+	Vol_down = 0;
+	
+	#3
+	Reset = 1;
+	Vol_up = 1;
 	Vol_down = 1;
 		
 	
