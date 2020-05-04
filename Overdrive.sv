@@ -7,10 +7,10 @@ module overdrive_effect (
 	input logic signed gain,
 	
 	// This is the input frame of a 1000 samples, with every sample having a 16 bit width.
-	input signed logic[15:0] input_frame,	
+	input logic signed[15:0] input_frame,	
 
 	// This is the output frame that has been passed through the overdrive effect
-	output signed logic[15:0] output_frame,
+	output logic signed[15:0] output_frame
 );
 
 
