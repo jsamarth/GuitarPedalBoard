@@ -5,6 +5,7 @@ module Pedal_Board(input logic [15:0] Signal_in,
 							
 logic od_start, trem_start, vib_start, echo_start;
 logic [15:0] OD_wire;
+logic [15:0] OD_out;
 
 
 overdrive_effect OD_pedal(	.input_frame(Signal_in),
