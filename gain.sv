@@ -28,42 +28,42 @@ always_comb begin
 	unique case (State)
 		reset: begin
 			Next_state = reset;
-			if (Button != 0)
+			if (Button == 0)
 				Next_state = Stb0;
 		end
 		Stb0: begin
 			Next_state = Stb0;
-			if (Button == 0)
+			if (Button != 0)
 				Next_state = Lvl1;		
 		end
 		Lvl1: begin
 			Next_state = Lvl1;
-			if (Button != 0)
+			if (Button == 0)
 				Next_state = Stb1;		
 		end
 		Stb1: begin
 			Next_state = Stb1;
-			if (Button == 0)
+			if (Button != 0)
 				Next_state = Lvl2;		
 		end
 		Lvl2: begin
 			Next_state = Lvl2;
-			if (Button != 0)
+			if (Button == 0)
 				Next_state = Stb2;		
 		end
 		Stb2: begin
 			Next_state = Stb2;
-			if (Button == 0)
+			if (Button != 0)
 				Next_state = Lvl3;		
 		end
 		Lvl3: begin
 			Next_state = Lvl3;
-			if (Button != 0)
+			if (Button == 0)
 				Next_state = Stb3;		
 		end
 		Stb3: begin
 			Next_state = Stb3;
-			if (Button == 0)
+			if (Button != 0)
 				Next_state = reset;		
 		end
 		default:;
@@ -84,8 +84,8 @@ always_comb begin
 		end
 		Lvl1: begin
 			Data_out_next = Data_in;
-			if(Data_in < 16'h3fff)
-				Data_out_next = Data_in << 1;
+			if($signed(Data_in) < $signed(16'h3fff) || $signed(Data_in) > $signed(16'hbfff))
+				Data_out_next = Data_in <<< 1;
 			volume_level_next = 2'b01;
 		end
 		Stb1: begin
@@ -93,8 +93,8 @@ always_comb begin
 		end
 		Lvl2: begin
 			Data_out_next = Data_in;
-			if(Data_in < 16'h1fff)
-				Data_out_next = Data_in << 2;
+			if($signed(Data_in) < $signed(16'h1fff) || $signed(Data_in) > $signed(16'h9fff))
+				Data_out_next = Data_in <<< 2;
 			volume_level_next = 2'b10;
 		end
 		Stb2: begin
@@ -102,8 +102,8 @@ always_comb begin
 		end
 		Lvl3: begin
 			Data_out_next = Data_in;
-			if(Data_in < 16'h0fff)
-				Data_out_next = Data_in << 3;
+			if($signed(Data_in) < $signed(16'h0fff) || $signed(Data_in) > $signed(16'h8fff))
+				Data_out_next = Data_in <<< 3;
 			volume_level_next = 2'b11;
 		end
 		Stb3: begin
