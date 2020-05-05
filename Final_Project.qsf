@@ -94,11 +94,47 @@ set_global_assignment -name SYSTEMVERILOG_FILE Overdrive.sv
 set_global_assignment -name SYSTEMVERILOG_FILE Testbench.sv
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH Testbench -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH Testbench_gain -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_NAME Testbench -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id Testbench
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id Testbench
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME Testbench -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE Testbench.sv -section_id Testbench
 set_global_assignment -name SYSTEMVERILOG_FILE hexdriver.sv
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id Testbench_regs
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME Testbench_regs -section_id Testbench_regs
+set_global_assignment -name EDA_TEST_BENCH_NAME Testbench_regs -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "400 ns" -section_id Testbench_regs
+set_location_assignment PIN_G18 -to HEX[0]
+set_location_assignment PIN_F22 -to HEX[1]
+set_location_assignment PIN_E17 -to HEX[2]
+set_location_assignment PIN_L26 -to HEX[3]
+set_location_assignment PIN_L25 -to HEX[4]
+set_location_assignment PIN_J22 -to HEX[5]
+set_location_assignment PIN_H22 -to HEX[6]
+set_global_assignment -name SYSTEMVERILOG_FILE Testbench_registers.sv
+set_global_assignment -name SYSTEMVERILOG_FILE Testbench_fp.sv
+set_location_assignment PIN_G21 -to LEDG[7]
+set_location_assignment PIN_M24 -to HEX1[0]
+set_location_assignment PIN_Y22 -to HEX1[1]
+set_location_assignment PIN_W22 -to HEX1[3]
+set_location_assignment PIN_W21 -to HEX1[2]
+set_location_assignment PIN_W25 -to HEX1[4]
+set_location_assignment PIN_U23 -to HEX1[5]
+set_location_assignment PIN_U24 -to HEX1[6]
+set_location_assignment PIN_AA25 -to HEX2[0]
+set_location_assignment PIN_AA26 -to HEX2[1]
+set_location_assignment PIN_Y25 -to HEX2[2]
+set_location_assignment PIN_W26 -to HEX2[3]
+set_location_assignment PIN_Y26 -to HEX2[4]
+set_location_assignment PIN_W27 -to HEX2[5]
+set_location_assignment PIN_W28 -to HEX2[6]
+set_global_assignment -name SYSTEMVERILOG_FILE gain.sv
+set_global_assignment -name SYSTEMVERILOG_FILE Testbench_gain.sv
+set_global_assignment -name EDA_TEST_BENCH_FILE Testbench.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE Testbench_registers.sv -section_id Testbench_regs
+set_global_assignment -name EDA_TEST_BENCH_NAME Testbench_gain -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id Testbench_gain
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "500 ns" -section_id Testbench_gain
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME Testbench_gain -section_id Testbench_gain
+set_global_assignment -name EDA_TEST_BENCH_FILE Testbench_gain.sv -section_id Testbench_gain
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
