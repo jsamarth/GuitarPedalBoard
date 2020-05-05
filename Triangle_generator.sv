@@ -1,11 +1,11 @@
 module Triangle_generator (
 	input logic CLK,
 	input logic RESET,
-	output logic [15:0] val
+	output logic [10:0] val
 );
 
 
-logic [11:0] timer; // period of the volume wave
+logic [15:0] timer; // period of the volume wave
 logic u_d; // Keeps track whether volume is increasing or decreasing
 
 always_ff @(posedge CLK)
@@ -13,14 +13,16 @@ always_ff @(posedge CLK)
 	
 		if (RESET)
 			begin
-			val <= 16'h0000;
-			timer <= 8'h00;
+			val <= 11'h005;
+			timer <= 16'h00000;
+			u_d = 1;
 			end
 			
 		else
 			begin
-				if (timer < 4'h320)
+				if (timer < 16'h3200)
 					timer <= timer + 1;
+					
 				else
 					begin
 						timer <= 0;
@@ -30,9 +32,10 @@ always_ff @(posedge CLK)
 							val <=val - 1;	
 					end
 			end
-		if (val == 16'hfffe || val == 16'h0000)
-			u_d = ~u_d;
-			
+		if (val == 11'd1000)
+			u_d = 0;
+		else if (val == 11'h000)
+			u_d = 1;
 
 	end
 
