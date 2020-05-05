@@ -94,7 +94,7 @@ set_global_assignment -name SYSTEMVERILOG_FILE Overdrive.sv
 set_global_assignment -name SYSTEMVERILOG_FILE Testbench.sv
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH Testbench_gain -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH Testbench -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_NAME Testbench -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id Testbench
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id Testbench
@@ -103,7 +103,7 @@ set_global_assignment -name SYSTEMVERILOG_FILE hexdriver.sv
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id Testbench_regs
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME Testbench_regs -section_id Testbench_regs
 set_global_assignment -name EDA_TEST_BENCH_NAME Testbench_regs -section_id eda_simulation
-set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "400 ns" -section_id Testbench_regs
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "400 ms" -section_id Testbench_regs
 set_location_assignment PIN_G18 -to HEX[0]
 set_location_assignment PIN_F22 -to HEX[1]
 set_location_assignment PIN_E17 -to HEX[2]
@@ -114,27 +114,60 @@ set_location_assignment PIN_H22 -to HEX[6]
 set_global_assignment -name SYSTEMVERILOG_FILE Testbench_registers.sv
 set_global_assignment -name SYSTEMVERILOG_FILE Testbench_fp.sv
 set_location_assignment PIN_G21 -to LEDG[7]
-set_location_assignment PIN_M24 -to HEX1[0]
-set_location_assignment PIN_Y22 -to HEX1[1]
-set_location_assignment PIN_W22 -to HEX1[3]
-set_location_assignment PIN_W21 -to HEX1[2]
-set_location_assignment PIN_W25 -to HEX1[4]
-set_location_assignment PIN_U23 -to HEX1[5]
-set_location_assignment PIN_U24 -to HEX1[6]
-set_location_assignment PIN_AA25 -to HEX2[0]
-set_location_assignment PIN_AA26 -to HEX2[1]
-set_location_assignment PIN_Y25 -to HEX2[2]
-set_location_assignment PIN_W26 -to HEX2[3]
-set_location_assignment PIN_Y26 -to HEX2[4]
-set_location_assignment PIN_W27 -to HEX2[5]
-set_location_assignment PIN_W28 -to HEX2[6]
 set_global_assignment -name SYSTEMVERILOG_FILE gain.sv
 set_global_assignment -name SYSTEMVERILOG_FILE Testbench_gain.sv
-set_global_assignment -name EDA_TEST_BENCH_FILE Testbench.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE Testbench_registers.sv -section_id Testbench_regs
 set_global_assignment -name EDA_TEST_BENCH_NAME Testbench_gain -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id Testbench_gain
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "500 ns" -section_id Testbench_gain
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME Testbench_gain -section_id Testbench_gain
+set_global_assignment -name SYSTEMVERILOG_FILE tremolo.sv
+set_global_assignment -name SYSTEMVERILOG_FILE Triangle_generator.sv
+set_global_assignment -name EDA_TEST_BENCH_FILE Testbench.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE Testbench_registers.sv -section_id Testbench_regs
 set_global_assignment -name EDA_TEST_BENCH_FILE Testbench_gain.sv -section_id Testbench_gain
+set_global_assignment -name SYSTEMVERILOG_FILE delay.sv
+set_location_assignment PIN_AB7 -to SRAM_ADDR[0]
+set_location_assignment PIN_AD7 -to SRAM_ADDR[1]
+set_location_assignment PIN_AE7 -to SRAM_ADDR[2]
+set_location_assignment PIN_AC7 -to SRAM_ADDR[3]
+set_location_assignment PIN_AB6 -to SRAM_ADDR[4]
+set_location_assignment PIN_AE6 -to SRAM_ADDR[5]
+set_location_assignment PIN_AB5 -to SRAM_ADDR[6]
+set_location_assignment PIN_AC5 -to SRAM_ADDR[7]
+set_location_assignment PIN_AF5 -to SRAM_ADDR[8]
+set_location_assignment PIN_T7 -to SRAM_ADDR[9]
+set_location_assignment PIN_AF2 -to SRAM_ADDR[10]
+set_location_assignment PIN_AD3 -to SRAM_ADDR[11]
+set_location_assignment PIN_AB4 -to SRAM_ADDR[12]
+set_location_assignment PIN_AC3 -to SRAM_ADDR[13]
+set_location_assignment PIN_AA4 -to SRAM_ADDR[14]
+set_location_assignment PIN_AB11 -to SRAM_ADDR[15]
+set_location_assignment PIN_AC11 -to SRAM_ADDR[16]
+set_location_assignment PIN_AB9 -to SRAM_ADDR[17]
+set_location_assignment PIN_AB8 -to SRAM_ADDR[18]
+set_location_assignment PIN_T8 -to SRAM_ADDR[19]
+set_location_assignment PIN_AH3 -to SRAM_DQ[0]
+set_location_assignment PIN_AF4 -to SRAM_DQ[1]
+set_location_assignment PIN_AG4 -to SRAM_DQ[2]
+set_location_assignment PIN_AH4 -to SRAM_DQ[3]
+set_location_assignment PIN_AF6 -to SRAM_DQ[4]
+set_location_assignment PIN_AG6 -to SRAM_DQ[5]
+set_location_assignment PIN_AH6 -to SRAM_DQ[6]
+set_location_assignment PIN_AF7 -to SRAM_DQ[7]
+set_location_assignment PIN_AD1 -to SRAM_DQ[8]
+set_location_assignment PIN_AD2 -to SRAM_DQ[9]
+set_location_assignment PIN_AE2 -to SRAM_DQ[10]
+set_location_assignment PIN_AE1 -to SRAM_DQ[11]
+set_location_assignment PIN_AE3 -to SRAM_DQ[12]
+set_location_assignment PIN_AE4 -to SRAM_DQ[13]
+set_location_assignment PIN_AF3 -to SRAM_DQ[14]
+set_location_assignment PIN_AG3 -to SRAM_DQ[15]
+set_location_assignment PIN_AD5 -to SRAM_OE_N
+set_location_assignment PIN_AE8 -to SRAM_WE_N
+set_location_assignment PIN_AF8 -to SRAM_CE_N
+set_location_assignment PIN_AD4 -to SRAM_LB_N
+set_location_assignment PIN_AC4 -to SRAM_UB_N
+set_location_assignment PIN_H15 -to LEDR[17]
+set_location_assignment PIN_F15 -to LEDR[14]
+set_location_assignment PIN_H16 -to LEDR[11]
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

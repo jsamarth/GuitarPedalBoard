@@ -17,12 +17,7 @@ overdrive_effect OD_pedal(	.input_frame(Signal_in),
 									.gain(Switches[16]),
 									.output_frame(OD_out));
 									
-delay d(							.input_frame(OD_out),
-									.CLK(Clk),
-									//.delay_time(Switches[10]),
-									.output_frame(delay_out), .*);
 									
-
 always_comb
 	begin
 		
@@ -31,12 +26,12 @@ always_comb
 		else
 			OD_wire = Signal_in;
 		
-	end
-
+	end									
+									
+									
 tremolo trem_pedal(	.Signal_in(OD_wire),
 							.CLK(Clk),
-							.RESET(trem_start),
-//							.DONE(trem_done),
+							.RESET(RESET),
 							//.speed(Switches[13]),
 							.Signal_out(trem_out));
 							
@@ -47,7 +42,25 @@ always_comb
 		else
 			trem_wire = OD_wire;
 	end
-							
+				
+		
+									
+delay d(							.input_frame(trem_wire),
+									.CLK(Clk),
+									//.delay_time(Switches[10]),
+									.output_frame(delay_out), .*);
+									
+
+always_comb
+	begin
+		if(Switches[11])
+			delay_wire = delay_out;
+		else
+			delay_wire = trem_wire;
+	end
+
+					
+			
 
 //					
 //vibrato vib_pedal(	.in(compmux_out),
@@ -75,27 +88,9 @@ always_comb
 always_comb
 	begin				
 //	Signal_out = echomux_out;
-	Signal_out = trem_wire;
+	Signal_out = delay_wire;
 	//Signal_out = Signal_in;
 	end
-always_ff @(posedge Clk)
-	begin
-//		if(OD_done & trem_done & vib_done & echo_done)
-		if(OD_done)
-			begin
-				od_start <= 0;
-				trem_start <= 0;
-	//			vib_start <= 0;
-	//			echo_start <= 0;
-			end
-		else
-			begin
-				od_start <= 1;
-				trem_start <= 1;
-	//			vib_start <= 1;
-	//			echo_start <= 1;
-			end
 
 
-	end
 endmodule
