@@ -6,7 +6,12 @@ module Final_Project(input  logic Clk,
 							output logic [6:0] HEX,
 							output logic [6:0] HEX1,
 							output logic [6:0] HEX2,
-							output logic [7:0]  LEDG);
+							output logic [7:0]  LEDG,
+							
+							output logic [19:0] SRAM_ADDR,
+							inout wire [15:0] SRAM_DQ,
+							output logic SRAM_OE_N,
+							output logic SRAM_CE_N, SRAM_UB_N, SRAM_LB_N, SRAM_WE_N);
 							
 logic init, init_f, start, adc_full, Reset_h;
 logic [15:0] board_out;
@@ -16,11 +21,18 @@ assign {Reset_h} = ~(Key[0]);
 
 assign LEDG[7] = Switch[17];
 
+assign SRAM_UB_N = 1'b0;
+assign SRAM_LB_N = 1'b0;
+assign SRAM_OE_N = 1'b0;
+assign SRAM_CE_N = 1'b0;
+assign SRAM_WE_N = 1'b1;
+
+logic [1:0] vol;
+
 hexdriver hex_disp(.In(hex_vol), .Out(HEX));
 hexdriver hex_disp1(.In({2'b00, vol}), .Out(HEX1));
 hexdriver hex_disp2(.In(4'ha), .Out(HEX2));
 
-logic [1:0] vol;
 logic [31:0] un_gained;
 logic [15:0] gained_output;
 gain g(.Data_in(un_gained[31:16]), .Clk(Clk), .Reset(Reset_h), .Button(Key[1]), .Data_out(gained_output), .volume_level(vol));
@@ -35,7 +47,8 @@ Register volume(	.Clk(Clk),
 Pedal_Board board_inst( .Signal_in(gained_output),
 								.Clk(Clk),
 								.Switches(Switch),
-								.Signal_out(board_out));
+								.Signal_out(board_out),
+								.RESET(Reset_h));
  
 audio_interface audio_interface_instance (	
 		.LDATA(board_out),
