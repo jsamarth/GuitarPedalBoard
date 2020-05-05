@@ -14,7 +14,7 @@ module overdrive_effect (
 );
 
 
-logic signed [17:0] temp_output;
+logic signed [20:0] temp_output;
 logic signed [15:0] output_frame_next;
 
 always_ff @ (posedge CLK) begin
@@ -32,15 +32,15 @@ always_ff @ (posedge CLK) begin
 end
 
 logic signed [3:0]temp_sum; 
-assign temp_sum = gain + 3'sb010;
+assign temp_sum = gain + 3'sb001;
 assign temp_output = input_frame * temp_sum;
 
 always_comb begin
 	output_frame_next = temp_output;
-	if(temp_output > 16'sh7fff)
-		output_frame_next = 16'sh7fff;
-	else if(temp_output < 16'sh8000)
-		output_frame_next = 16'sh8000;
+	if(temp_output > 16'h7fff)
+		output_frame_next = 16'h7fff;
+	else if(temp_output < 16'h8000)
+		output_frame_next = 16'h8000;
 end
 
 endmodule

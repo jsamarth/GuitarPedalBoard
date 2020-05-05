@@ -7,7 +7,6 @@ logic od_start, trem_start, vib_start, echo_start;
 logic [15:0] OD_wire, trem_wire;
 logic [15:0] OD_out, trem_out;
 
-
 overdrive_effect OD_pedal(	.input_frame(Signal_in),
 									.CLK(Clk),
 									.START(od_start),
