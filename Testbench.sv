@@ -28,7 +28,7 @@ initial begin: TEST_VECTORS
 	
 	#5
 	Signal_in = 16'h4af3;
-	Switches = 18'h20000;
+	Switches = 18'h2f000;
 	
 	#5
 	Signal_in = 16'h0005;
@@ -37,7 +37,7 @@ initial begin: TEST_VECTORS
 	Signal_in = 16'hfa8d;
 	
 	#5
-	Switches = 18'h00000;
+	Switches = 18'h3f000;
 		
 	
 end

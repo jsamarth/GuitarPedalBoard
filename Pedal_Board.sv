@@ -4,8 +4,8 @@ module Pedal_Board(input logic [15:0] Signal_in,
 							output logic [15:0] Signal_out);
 							
 logic od_start, trem_start, vib_start, echo_start;
-logic [15:0] OD_wire;
-logic [15:0] OD_out;
+logic [15:0] OD_wire, trem_wire;
+logic [15:0] OD_out, trem_out;
 
 
 overdrive_effect OD_pedal(	.input_frame(Signal_in),
@@ -26,17 +26,22 @@ always_comb
 		
 	end
 
-//tremolo trem_pedal(	.in(distmux_out),
-//								.Clk(Clk),
-//								.START(trem_start),
-//								.DONE(trem_done),
-//								.speed(Switches[13]),
-//								.out(trem_out));
-//								
-//mux2_1 tremmux(.d0(distmux_out),
-//					.d1(trem_out),
-//					.s(Switches[14]),
-//					.out(tremmux_out));
+tremolo trem_pedal(	.Signal_in(OD_wire),
+							.CLK(Clk),
+							.RESET(trem_start),
+//							.DONE(trem_done),
+							//.speed(Switches[13]),
+							.Signal_out(trem_out));
+							
+always_comb
+	begin
+		if(Switches[14])
+			trem_wire = trem_out;
+		else
+			trem_wire = OD_wire;
+	end
+							
+
 //					
 //vibrato vib_pedal(	.in(compmux_out),
 //							.START(vib_start),
@@ -63,7 +68,7 @@ always_comb
 always_comb
 	begin				
 //	Signal_out = echomux_out;
-	Signal_out = OD_wire;
+	Signal_out = trem_wire;
 	//Signal_out = Signal_in;
 	end
 always_ff @(posedge Clk)
@@ -72,14 +77,14 @@ always_ff @(posedge Clk)
 		if(OD_done)
 			begin
 				od_start <= 0;
-	//			trem_start <= 0;
+				trem_start <= 0;
 	//			vib_start <= 0;
 	//			echo_start <= 0;
 			end
 		else
 			begin
 				od_start <= 1;
-	//			trem_start <= 1;
+				trem_start <= 1;
 	//			vib_start <= 1;
 	//			echo_start <= 1;
 			end
