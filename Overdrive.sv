@@ -1,7 +1,5 @@
 module overdrive_effect (
 	input logic CLK,
-	input logic START,
-	output logic DONE,
 
 	// Two cutoff levels 
 	input logic gain,
@@ -17,36 +15,26 @@ module overdrive_effect (
 logic [15:0] output_frame_next;
 
 always_ff @ (posedge CLK) begin
-	if(START == 0) begin
-		DONE <= 0;
-	end
-
-	else begin
-		output_frame = output_frame_next;
-		DONE <= 1'b1;
-	end
-	
-	if(DONE == 1)
-		DONE <= 0;
+	output_frame = output_frame_next;
 end
 
 always_comb begin
-	output_frame_next = input_frame;
+	output_frame_next = input_frame <<< 2;
 	if(gain) begin
-		if($signed(output_frame_next) > $signed(16'h3fff)) begin
-			output_frame_next = 16'h3fff;
+		if($signed(output_frame_next) > $signed(16'h3a98)) begin // 15000
+			output_frame_next = 16'h3a98;
 		end
-		if($signed(output_frame_next) < $signed(16'hbfff)) begin
-			output_frame_next = 16'hbfff;
+		if($signed(output_frame_next) < $signed(16'hc568)) begin
+			output_frame_next = 16'hc568;
 		end
 	end
 	
 	else begin
-		if($signed(output_frame_next) > $signed(16'h0fff)) begin
-			output_frame_next = 16'h0fff;
+		if($signed(output_frame_next) > $signed(16'h2710)) begin // 10000
+			output_frame_next = 16'h2710;
 		end
-		if($signed(output_frame_next) < $signed(16'h8fff)) begin
-			output_frame_next = 16'h8fff;
+		if($signed(output_frame_next) < $signed(16'hd8f0)) begin
+			output_frame_next = 16'hd8f0;
 		end
 	end
 end
