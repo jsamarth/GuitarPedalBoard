@@ -3,19 +3,18 @@ module overdrive_effect (
 	input logic START,
 	output logic DONE,
 
-	// How much gain to apply to the sound. '0' means 2 times. '1' means 3 times 
-	input logic signed gain,
+	// Two cutoff levels 
+	input logic gain,
 	
-	// This is the input frame of a 1000 samples, with every sample having a 16 bit width.
-	input logic signed[15:0] input_frame,	
+	// 
+	input logic [15:0] input_frame,	
 
 	// This is the output frame that has been passed through the overdrive effect
-	output logic signed[15:0] output_frame
+	output logic [15:0] output_frame
 );
 
 
-logic signed [20:0] temp_output;
-logic signed [15:0] output_frame_next;
+logic [15:0] output_frame_next;
 
 always_ff @ (posedge CLK) begin
 	if(START == 0) begin
@@ -31,16 +30,25 @@ always_ff @ (posedge CLK) begin
 		DONE <= 0;
 end
 
-logic signed [3:0]temp_sum; 
-assign temp_sum = gain + 3'sb001;
-assign temp_output = input_frame * temp_sum;
-
 always_comb begin
-	output_frame_next = temp_output;
-	if(temp_output > 16'h7fff)
-		output_frame_next = 16'h7fff;
-	else if(temp_output < 16'h8000)
-		output_frame_next = 16'h8000;
+	output_frame_next = input_frame;
+	if(gain) begin
+		if($signed(output_frame_next) > $signed(16'h3fff)) begin
+			output_frame_next = 16'h3fff;
+		end
+		if($signed(output_frame_next) < $signed(16'hbfff)) begin
+			output_frame_next = 16'hbfff;
+		end
+	end
+	
+	else begin
+		if($signed(output_frame_next) > $signed(16'h0fff)) begin
+			output_frame_next = 16'h0fff;
+		end
+		if($signed(output_frame_next) < $signed(16'h8fff)) begin
+			output_frame_next = 16'h8fff;
+		end
+	end
 end
 
 endmodule
