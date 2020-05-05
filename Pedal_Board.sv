@@ -1,18 +1,26 @@
 module Pedal_Board(input logic [15:0] Signal_in,
+						input logic RESET,
 							input logic Clk,
 							input logic [17:0] Switches,
-							output logic [15:0] Signal_out);
+							output logic [15:0] Signal_out,
 							
-logic od_start, trem_start, vib_start, echo_start;
-logic [15:0] OD_wire, trem_wire;
-logic [15:0] OD_out, trem_out;
+							output logic [19:0] SRAM_ADDR,
+							inout wire [15:0] SRAM_DQ);
+							
+logic od_start, trem_start, vib_start, delay_start;
+logic OD_done, trem_done, vib_done, delay_done;
+logic [15:0] OD_wire, trem_wire, delay_wire;
+logic [15:0] OD_out, trem_out, delay_out;
 
 overdrive_effect OD_pedal(	.input_frame(Signal_in),
 									.CLK(Clk),
-									.START(od_start),
-									.DONE(OD_done),
 									.gain(Switches[16]),
 									.output_frame(OD_out));
+									
+delay d(							.input_frame(OD_out),
+									.CLK(Clk),
+									//.delay_time(Switches[10]),
+									.output_frame(delay_out), .*);
 									
 
 always_comb
