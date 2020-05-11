@@ -19,9 +19,9 @@ always_ff @ (posedge CLK) begin
 end
 
 always_comb begin
-	output_frame_next = input_frame <<< 2;
+	output_frame_next = input_frame;
 	if(gain) begin
-		if($signed(output_frame_next) > $signed(16'h3a98)) begin // -15000 and +15000
+		if($signed(output_frame_next) > $signed(16'h3a98)) begin // 15000
 			output_frame_next = 16'h3a98;
 		end
 		if($signed(output_frame_next) < $signed(16'hc568)) begin
@@ -30,11 +30,11 @@ always_comb begin
 	end
 	
 	else begin
-		if($signed(output_frame_next) > $signed(16'h7530)) begin // -30000 and +30000 
-			output_frame_next = 16'h7530;
+		if($signed(output_frame_next) > $signed(16'h2710)) begin // 10000
+			output_frame_next = 16'h2710;
 		end
-		if($signed(output_frame_next) < $signed(16'h8ad0)) begin
-			output_frame_next = 16'h8ad0;
+		if($signed(output_frame_next) < $signed(16'hd8f0)) begin
+			output_frame_next = 16'hd8f0;
 		end
 	end
 end

@@ -37,46 +37,24 @@ initial begin: TEST_VECTORS
 	#10
 	Button = 0;
 	
-	#2
-	Data_in = 16'h5f3a;
-	
-	#2
-	Data_in = 16'h0035;
-	
-	#2
-	Data_in = 16'h0067;
-	
 	#20
 	Button = 1;
 	
 	#20
 	Button = 0;
-	
-	#2
-	Data_in = 16'h0067;
-	
+
 	#20
 	Button = 1;
 	
-	#20
+	#2
 	Button = 0;
 	
 	#5
-	Data_in = 16'h4537;
 	Button = 1;
 	
 	#10
 	Button = 0;
-	
-	#2
-	Data_in = 16'h5f3a;
-	
-	#2
-	Data_in = 16'h0035;
-	
-	#2
-	Data_in = 16'h0067;
-	
+		
 	#20
 	Button = 1;
 	
@@ -84,13 +62,22 @@ initial begin: TEST_VECTORS
 	Button = 0;
 	
 	#2
-	Data_in = 16'h0067;
-	
-	#20
 	Button = 1;
 	
-	#20
+	#2
 	Button = 0;
+	
+	#5
+	Data_in = 16'h4537;
+	
+	#5
+	Data_in = 16'hffff;
+	
+	#5
+	Data_in = 16'h0100;
+	
+	#5
+	Data_in = 16'hf000;
 	
 end
 endmodule

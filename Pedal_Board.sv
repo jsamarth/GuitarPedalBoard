@@ -45,19 +45,19 @@ always_comb
 				
 		
 									
-delay d(							.input_frame(trem_wire),
-									.CLK(Clk),
-									//.delay_time(Switches[10]),
-									.output_frame(delay_out), .*);
-									
+//delay d(							.input_frame(trem_wire),
+//									.CLK(Clk),
+//									//.delay_time(Switches[10]),
+//									.output_frame(delay_out), .*);
+//									
 
-always_comb
-	begin
-		if(Switches[11])
-			delay_wire = delay_out;
-		else
-			delay_wire = trem_wire;
-	end
+//always_comb
+//	begin
+//		if(Switches[11])
+//			delay_wire = delay_out;
+//		else
+//			delay_wire = trem_wire;
+//	end
 
 					
 			
@@ -88,7 +88,8 @@ always_comb
 always_comb
 	begin				
 //	Signal_out = echomux_out;
-	Signal_out = delay_wire;
+//	Signal_out = delay_wire;
+	Signal_out = trem_wire;
 	//Signal_out = Signal_in;
 	end
 

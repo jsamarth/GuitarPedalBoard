@@ -1,19 +1,42 @@
-module Final_Project(input  logic Clk, 
-							input logic [3:0] Key,
-							input  logic AUD_BCLK, AUD_ADCDAT, AUD_DACLRCK, AUD_ADCLRCK,
-							input  logic [17:0] Switch,
-							output logic AUD_MCLK, AUD_DACDAT, I2C_SDAT, I2C_SCLK,
-							output logic [6:0] HEX,
-							output logic [7:0]  LEDG,
-							output logic [17:0]  LEDR,
-							output logic [19:0] SRAM_ADDR,
-							inout wire [15:0] SRAM_DQ,
-							output logic SRAM_OE_N,
-							output logic SRAM_CE_N, SRAM_UB_N, SRAM_LB_N, SRAM_WE_N);
-							
-logic init, init_f, start, adc_full, Reset_h;
+module Final_Project(
+			input               CLOCK_50,
+			// VGA Interface 
+			output logic [7:0]  VGA_R,        //VGA Red
+								VGA_G,        //VGA Green
+								VGA_B,        //VGA Blue
+			output logic        VGA_CLK,      //VGA Clock
+								VGA_SYNC_N,   //VGA Sync signal
+								VGA_BLANK_N,  //VGA Blank signal
+								VGA_VS,       //VGA virtical sync signal
+								VGA_HS,      //VGA horizontal sync signal
+								 
+			input logic [3:0] Key,
+			input  logic AUD_BCLK, AUD_ADCDAT, AUD_DACLRCK, AUD_ADCLRCK,
+			input  logic [17:0] Switch,
+			output logic AUD_MCLK, AUD_DACDAT, I2C_SDAT, I2C_SCLK,
+			output logic [6:0] HEX,
+			output logic [7:0]  LEDG,
+			output logic [17:0]  LEDR,
+			output logic [19:0] SRAM_ADDR,
+			inout wire [15:0] SRAM_DQ,
+			output logic SRAM_OE_N,
+			output logic SRAM_CE_N, SRAM_UB_N, SRAM_LB_N, SRAM_WE_N);
+
+logic init, init_f, start, adc_full;
 logic [15:0] board_out;
 logic [31:0] board_in;
+							
+logic Reset_h, Clk;
+
+assign Clk = CLOCK_50;
+
+logic [9:0] DrawX, DrawY;
+logic is_shape;
+
+logic [1:0] vol;
+
+logic [31:0] un_gained;
+logic [15:0] gained_output;
 
 assign {Reset_h} = ~(Key[0]);
 
@@ -28,22 +51,20 @@ assign SRAM_OE_N = 1'b0;
 assign SRAM_CE_N = 1'b0;
 assign SRAM_WE_N = 1'b1;
 
-logic [1:0] vol;
+// Use PLL to generate the 25MHZ VGA_CLK.
+// You will have to generate it on your own in simulation.
+vga_clk vga_clk_instance(.inclk0(Clk), .c0(VGA_CLK));
+
+VGA_controller vga_controller_instance(.Reset(Reset_h), .*); 
+ 
+shape shape_instance(.Reset(Reset_h), .frame_clk(VGA_VS), .next_val(board_out), .*);
+
+color_mapper color_instance(.*);
 
 //hexdriver hex_disp(.In(hex_vol), .Out(HEX));
 hexdriver hex_disp1(.In({2'b00, vol}), .Out(HEX));
 //hexdriver hex_disp2(.In(4'ha), .Out(HEX2));
-
-logic [31:0] un_gained;
-logic [15:0] gained_output;
-gain g(.Data_in(un_gained[31:16]), .Clk(Clk), .Reset(Reset_h), .Button(Key[1]), .Data_out(gained_output), .volume_level(vol));
-
-Register volume(	.Clk(Clk), 
-						.Reset(Reset_h),
-						.Vol_up(Key[3]),
-						.Vol_down(Key[2]),
-						.Data(Vol_level),
-						.hex_vol(hex_vol));
+gain g(.Data_in(un_gained[31:16]), .Clk(Clk), .Reset(Reset_h), .Button(~Key[1]), .Data_out(gained_output), .volume_level(vol));
 
 Pedal_Board board_inst( .Signal_in(gained_output),
 								.Clk(Clk),
@@ -66,7 +87,7 @@ audio_interface audio_interface_instance (
 		.AUD_ADCDAT(AUD_ADCDAT), 
 		.AUD_DACDAT(AUD_DACDAT), 
 		.AUD_DACLRCK(AUD_DACLRCK), 
-      .AUD_ADCLRCK(AUD_ADCLRCK),
+	  	.AUD_ADCLRCK(AUD_ADCLRCK),
 		.I2C_SDAT(I2C_SDAT), 
 		.I2C_SCLK(I2C_SCLK),
 		.ADCDATA(un_gained));	

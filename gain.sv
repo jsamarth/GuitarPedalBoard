@@ -72,42 +72,42 @@ end
 	
 // Handle what happens in different states
 always_comb begin
-	Data_out_next = Data_out;
+	Data_out_next = Data_in;
 	volume_level_next = volume_level;
 	unique case (State)
 		reset: begin
+			
+		end
+		Stb0: begin
 			Data_out_next = Data_in;
 			volume_level_next = 0;
 		end
-		Stb0: begin
-
-		end
 		Lvl1: begin
+		
+		end
+		Stb1: begin
 			Data_out_next = Data_in;
-			if($signed(Data_in) < $signed(16'h3fff) || $signed(Data_in) > $signed(16'hbfff))
+			if($signed(Data_in) > $signed(16'he000) && $signed(Data_in) < $signed(16'h1fff)) // -8192 to +8191
 				Data_out_next = Data_in <<< 1;
 			volume_level_next = 2'b01;
 		end
-		Stb1: begin
-				
-		end
 		Lvl2: begin
+			
+		end
+		Stb2: begin
 			Data_out_next = Data_in;
-			if($signed(Data_in) < $signed(16'h1fff) || $signed(Data_in) > $signed(16'h9fff))
+			if($signed(Data_in) > $signed(16'hf000) && $signed(Data_in) < $signed(16'h0fff)) // -4096 to 4095
 				Data_out_next = Data_in <<< 2;
 			volume_level_next = 2'b10;
 		end
-		Stb2: begin
-				
-		end
 		Lvl3: begin
-			Data_out_next = Data_in;
-			if($signed(Data_in) < $signed(16'h0fff) || $signed(Data_in) > $signed(16'h8fff))
-				Data_out_next = Data_in <<< 3;
-			volume_level_next = 2'b11;
+			
 		end
 		Stb3: begin
-				
+			Data_out_next = Data_in;
+			if($signed(Data_in) > $signed(16'hf800) && $signed(Data_in) < $signed(16'h07ff)) // -2048 to +2047
+				Data_out_next = Data_in <<< 3;
+			volume_level_next = 2'b11;	
 		end
 		default:;
 	endcase	
