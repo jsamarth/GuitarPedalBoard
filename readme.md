@@ -2,6 +2,9 @@
 
 This is an FPGA Project on Guitar Effects. Usually, guitarists use one guitar effect Stompbox per effect. This project is aimed at using the FPGA hardware, which is significantly faster than Microcontrollers, to modulate Guitar signals being fed into the board using Digital Signal Processing. 
 
+![VGA monitor displaying the wave passing through time](vga.jpg?raw=true "VGA Display")
+![My entire setup](setup.jpg?raw=true "Entire Setup")
+
 ## Devices/Software Used
 
 Here is a list of basic requirements for this project:
