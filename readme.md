@@ -44,5 +44,5 @@ Here are a few ways I would work on this project in the near future:
 Here is what I can do in the future to take this project to the next step:
 * Connect the board to a User Interface on a computer or a phone through Bluetooth
 * Have 2-3 actual pedals, 5-6 knobs that can be assigned to differect effects through the aforementioned interface.
-* Have all the basic effects a guitarists could need, but provided added functionality on the app to add more effects.
+* Have all the basic effects a guitarists could need, but provid added functionality on the app to let user add more effects.
 
